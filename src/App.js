@@ -10,6 +10,7 @@ import Rapports from './pages/Rapports';
 import Parametres from './pages/Parametres';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
+import Utilisateurs from './pages/Utilisateurs';
 
 // 1. Layout intelligent qui synchronise le titre du Header avec l'URL actuelle
 function Layout({ children }) {
@@ -84,6 +85,11 @@ export default function App() {
         <Route path="/rapports" element={
           <ProtectedRoute allowedRoles={['ADMIN']}>
             <Rapports />
+          </ProtectedRoute>
+        } />
+        <Route path="/utilisateur" element={
+          <ProtectedRoute allowedRoles={['ADMIN']}>
+            <Utilisateurs />
           </ProtectedRoute>
         } />
 

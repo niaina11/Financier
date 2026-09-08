@@ -51,6 +51,8 @@ export default function Header({ page }) {
       navigate('/operations');
     } else if (notif.id_alerte) {
       navigate('/alertes');
+    } else if (notif.type === "CREATION") {
+      navigate('/utilisateur');
     } else {
       // Pas d'id_operation ni id_alerte → c'est une demande
       navigate('/parametres');

@@ -142,7 +142,7 @@ export default function Agences() {
         <table className="w-full text-sm">
           <thead className="bg-gray-50 border-b">
             <tr>
-              {['ID', 'Nom', 'Ville', 'Solde actuel (Ar)', 'Agents', 'Actions'].map(h => (
+              {['ID', 'Nom', 'Ville', 'Solde actuel (Ar)','Seuil minimal','Seuil maximal', 'Agents', 'Actions'].map(h => (
                 <th key={h} className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">{h}</th>
               ))}
             </tr>
@@ -174,6 +174,8 @@ export default function Agences() {
                   <td className={`px-4 py-3 font-bold ${soldeNumerique < 0 ? 'text-red-600' : 'text-green-600'}`}>
                     {soldeNumerique.toLocaleString()} Ar
                   </td>
+                  <td className="px-4 py-3">{a.parametre?.fonds_minimum?.toLocaleString() || 'N/A'} Ar</td>
+                  <td className="px-4 py-3">{a.parametre?.fonds_maximum?.toLocaleString() || 'N/A'} Ar</td>
 
                   {/* Statut dynamique basé sur le seuil financier */}
                   <td className="px-4 py-3">

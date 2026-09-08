@@ -2,23 +2,27 @@ import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom'; // 1. Importer les outils de routage
 import {
   LayoutDashboard, Building2, Activity, Bell,
-  FileText, BarChart2, Settings, LogOut
+  FileText, BarChart2, Settings, LogOut,
+  Users
 } from 'lucide-react';
 
-const navItems = [
+
+
+export default function Sidebar({ page }) {
+  const navigate = useNavigate();
+  const userRole = localStorage.getItem('role') || 'AGENT'; // Récupération du rôle connecté
+
+  const navItems = [
   { id: 'dashboard', label: 'Tableau de bord', icon: LayoutDashboard, path: '/dashboard', roles: ['ADMIN', 'AGENT'] },
   { id: 'operations', label: 'Opérations', icon: Activity, path: '/operations', roles: ['ADMIN', 'AGENT'] },
   { id: 'parametres', label: 'Demandes', icon: FileText, path: '/parametres', roles: ['ADMIN', 'AGENT'] },
   // Menus réservés uniquement à l'ADMIN
   { id: 'agences', label: 'Agences', icon: Building2, path: '/agences', roles: ['ADMIN'] },
-  { id: 'alertes', label: 'Alertes', icon: Bell, badge: 12, path: '/alertes', roles: ['ADMIN'] },
+  { id: 'alertes', label: 'Alertes', icon: Bell, path: '/alertes', roles: ['ADMIN'] },
   { id: 'audit', label: 'Audit (Journal)', icon: FileText, path: '/audit', roles: ['ADMIN'] },
   { id: 'rapports', label: 'Rapports', icon: BarChart2, path: '/rapports', roles: ['ADMIN'] },
+  { id: 'utilisateurs', label: 'Utilisateurs', icon: Users, path: '/utilisateur', roles: ['ADMIN'] },
 ];
-
-export default function Sidebar({ page }) {
-  const navigate = useNavigate();
-  const userRole = localStorage.getItem('role') || 'AGENT'; // Récupération du rôle connecté
 
   // 2. Gestion de la déconnexion sécurisée
   const handleLogout = () => {
