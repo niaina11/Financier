@@ -94,7 +94,7 @@ export default function Alertes() {
             key={n}
             onClick={() => setFilter(n)}
             className={`px-4 py-2 rounded-xl text-sm font-semibold transition ${filter === n
-                ? "bg-blue-600 text-white"
+                ? "bg-[#0033A0] text-white"
                 : "bg-white text-gray-600 border hover:bg-gray-50"
               }`}
           >

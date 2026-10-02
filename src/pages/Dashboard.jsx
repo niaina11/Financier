@@ -70,63 +70,60 @@ export default function Dashboard() {
 
 
   return (
-    <div className="space-y-6">
-      {/* Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard title="Agences" value={nbAgences} sub="Toutes actives" color="blue" icon={Building2} />
-        <StatCard title="Utilisateurs" value={nbAgents} sub="Agents connectés" color="green" icon={Users} />
-        <StatCard title="Total Recettes" value={`${recette.toLocaleString()} Ar`} sub="Ce mois" color="green" icon={TrendingUp} />
-        <StatCard title="Total Dépenses" value={`${depense.toLocaleString()} Ar`} sub="Ce mois" color="red" icon={TrendingDown} />
-      </div>
-
-      {/* Solde global */}
-      <div className="bg-white rounded-xl p-5 border shadow-sm">
-        <p className="text-sm text-gray-500 mb-1">Solde Global Consolidé</p>
-        <p className="font-display text-3xl font-bold text-green-600">{recette} Ar</p>
-      </div>
-
-      
-        {/* Graphe évolution */}
-        <div className="lg:col-span-2 bg-white rounded-xl p-5 border shadow-sm">
-          <h3 className="font-semibold text-gray-700 mb-4">Évolution Recettes / Dépenses</h3>
-          {lineData.length === 0 ? (
-            <p className="text-sm text-gray-400">Aucune donnée disponible</p>
-          ) : (
-            <ResponsiveContainer width="100%" height={220}>
-              <LineChart data={lineData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                <XAxis dataKey="mois" tick={{ fontSize: 12 }} />
-                <YAxis tick={{ fontSize: 12 }} />
-                <Tooltip />
-                <Line type="monotone" dataKey="recettes" stroke="#27ae60" strokeWidth={2} dot={false} />
-                <Line type="monotone" dataKey="depenses" stroke="#e74c3c" strokeWidth={2} dot={false} />
-              </LineChart>
-            </ResponsiveContainer>
-          )}
-        </div>
-
-        {/* Alertes récentes */}
-        {/* <div className="bg-white rounded-xl p-5 border shadow-sm">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold text-gray-700">Alertes Récentes</h3>
-            <Bell size={16} className="text-red-500" />
-          </div>
-          {recentAlerts.map((a, i) => <AlertCard key={i} {...a} />)}
-        </div> */}
-
-      {/* Solde par agence */}
-      <div className="bg-white rounded-xl p-5 border shadow-sm">
-        <h3 className="font-semibold text-gray-700 mb-4">Solde par Agence (en M Ar)</h3>
-        <ResponsiveContainer width="100%" height={200}>
-          <BarChart data={soldeParAgence}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-            <XAxis dataKey="agence.nom" tick={{ fontSize: 12 }} />
-            <YAxis tick={{ fontSize: 12 }} />
-            <Tooltip />
-            <Bar dataKey="montant_actuel" fill="#2980b9" radius={[4, 4, 0, 0]} />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
+  <div className="space-y-6">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <StatCard title="Agences" value={nbAgences} sub="Toutes actives" color="blue" icon={Building2} />
+      <StatCard title="Utilisateurs" value={nbAgents} sub="Agents connectés" color="yellow" icon={Users} />
+      <StatCard title="Total Recettes" value={`${recette.toLocaleString()} Ar`} sub="Ce mois" color="green" icon={TrendingUp} />
+      <StatCard title="Total Dépenses" value={`${depense.toLocaleString()} Ar`} sub="Ce mois" color="red" icon={TrendingDown} />
     </div>
-  );
+
+    <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm relative overflow-hidden">
+      <div className="absolute top-0 left-0 w-1 h-full bg-[#0033A0]" />
+      <p className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Solde Global Consolidé</p>
+      <p className="font-display text-3xl font-black text-[#0033A0]">
+        {(recette - depense).toLocaleString()} Ar
+      </p>
+    </div>
+
+    {/* Graphe évolution Recettes / Dépenses */}
+    <div className="lg:col-span-2 bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
+      <h3 className="font-black text-[#0033A0] text-sm uppercase tracking-wider mb-4">
+        Évolution Recettes / Dépenses
+      </h3>
+      {lineData.length === 0 ? (
+        <p className="text-sm text-gray-400 py-10 text-center font-medium">Aucune donnée disponible</p>
+      ) : (
+        <ResponsiveContainer width="100%" height={220}>
+          <LineChart data={lineData}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+            <XAxis dataKey="mois" tick={{ fontSize: 11, fill: '#6b7280', fontWeight: 600 }} />
+            <YAxis tick={{ fontSize: 11, fill: '#6b7280', fontWeight: 600 }} />
+            <Tooltip contentStyle={{ borderRadius: '8px', border: '1px solid #f3f4f6', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.05)' }} />
+            {/* Vert financier moderne et Rouge financier moderne */}
+            <Line type="monotone" dataKey="recettes" stroke="#10b981" strokeWidth={3} dot={{ r: 4, fill: '#10b981' }} activeDot={{ r: 6 }} />
+            <Line type="monotone" dataKey="depenses" stroke="#ef4444" strokeWidth={3} dot={{ r: 4, fill: '#ef4444' }} activeDot={{ r: 6 }} />
+          </LineChart>
+        </ResponsiveContainer>
+      )}
+    </div>
+
+    {/* Solde par agence - Intégration de la couleur Bleu Paositra */}
+    <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
+      <h3 className="font-black text-[#0033A0] text-sm uppercase tracking-wider mb-4">
+        Solde par Agence (en M Ar)
+      </h3>
+      <ResponsiveContainer width="100%" height={200}>
+        <BarChart data={soldeParAgence}>
+          <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+          <XAxis dataKey="agence.nom" tick={{ fontSize: 11, fill: '#6b7280', fontWeight: 600 }} />
+          <YAxis tick={{ fontSize: 11, fill: '#6b7280', fontWeight: 600 }} />
+          <Tooltip contentStyle={{ borderRadius: '8px', border: '1px solid #f3f4f6' }} />
+          {/* Les barres d'agences s'affichent fièrement avec le Bleu Officiel de la Poste */}
+          <Bar dataKey="montant_actuel" fill="#0033A0" radius={[4, 4, 0, 0]} />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  </div>
+);
 }

@@ -45,47 +45,81 @@ export default function Operations() {
     o.agence?.nom?.toLowerCase().includes(search.toLowerCase())
   );
 
-  return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <div className="relative">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-          <input
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            placeholder="Rechercher..."
-            className="pl-10 pr-4 py-2 border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 w-64"
-          />
-        </div>
-      </div>
-      <div className="bg-white rounded-xl border shadow-sm overflow-hidden">
-        <table className="w-full text-sm">
-          <thead className="bg-gray-50 border-b">
-            <tr>
-              {['Référence', 'Type', 'Montant', 'Agence', 'Agent', 'Client', 'Date'].map(h => (
-                <th key={h} className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.map(o => (
-              <tr key={o.id_operation} className="border-b hover:bg-gray-50">
-                <td className="px-4 py-3 font-mono text-xs text-gray-600">{referencesParId.get(o.id_operation)}</td>
-                <td className={`px-4 py-3 font-semibold ${o.type_operation === 'ENCAISSEMENT' ? 'text-green-600' : 'text-red-600'}`}>{o.type_operation}</td>
-                <td className="px-4 py-3 font-bold text-gray-700">{o.montant.toLocaleString()} Ar</td>
-                <td className="px-4 py-3 text-gray-500">{o.agence?.nom || 'N/A'}</td>
-                <td className="px-4 py-3 text-gray-500">{o.agent?.nom || 'N/A'}</td>
-                <td className="px-4 py-3 text-gray-500">{o.nom_client || 'N/A'}</td>
-                <td className="px-4 py-3 text-gray-400">
-                  {new Date(o.date_operation).toLocaleString("fr-FR", {
-                    day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit",
-                  })}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+ return (
+  <div className="space-y-4">
+    {/* Barre de recherche avec focus Bleu Paositra */}
+    <div className="flex items-center justify-between">
+      <div className="relative">
+        <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+        <input
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          placeholder="Rechercher une opération..."
+          className="pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#0033A0] focus:border-transparent w-72 shadow-sm font-medium transition-all"
+        />
       </div>
     </div>
-  );
+
+    {/* Structure de la Table aux normes de l'institution */}
+    <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+      <table className="w-full text-sm">
+        <thead className="bg-[#0033A0]/5 border-b border-gray-200">
+          <tr>
+            {['Référence', 'Type', 'Montant', 'Agence', 'Agent', 'Client', 'Date'].map(h => (
+              <th 
+                key={h} 
+                className="px-4 py-3.5 text-left text-xs font-black text-[#0033A0] uppercase tracking-wider"
+              >
+                {h}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-gray-100">
+          {filtered.map(o => (
+            <tr key={o.id_operation} className="hover:bg-gray-50/80 transition-colors">
+              {/* Référence */}
+              <td className="px-4 py-3.5 font-mono text-xs text-gray-600 font-semibold">
+                {referencesParId.get(o.id_operation)}
+              </td>
+              {/* Type d'opération (Vert / Rouge financier propre) */}
+              <td className={`px-4 py-3.5 text-xs font-black tracking-wide`}>
+                <span className={`px-2 py-1 rounded-md text-xs ${
+                  o.type_operation === 'ENCAISSEMENT' 
+                    ? 'bg-emerald-50 text-emerald-700' 
+                    : 'bg-rose-50 text-rose-700'
+                }`}>
+                  {o.type_operation}
+                </span>
+              </td>
+              {/* Montant */}
+              <td className="px-4 py-3.5 font-extrabold text-gray-800">
+                {o.montant.toLocaleString()} Ar
+              </td>
+              {/* Agence (Mise en valeur subtile en bleu pour le réseau postal) */}
+              <td className="px-4 py-3.5 font-semibold text-[#0033A0]/90">
+                {o.agence?.nom || 'N/A'}
+              </td>
+              {/* Agent */}
+              <td className="px-4 py-3.5 text-gray-600 font-medium">
+                {o.agent?.nom || 'N/A'}
+              </td>
+              {/* Client */}
+              <td className="px-4 py-3.5 text-gray-600 font-medium">
+                {o.nom_client || 'N/A'}
+              </td>
+              {/* Date */}
+              <td className="px-4 py-3.5 text-gray-400 font-medium text-xs">
+                {new Date(o.date_operation).toLocaleString("fr-FR", {
+                  day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit",
+                })}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+);
+
 }

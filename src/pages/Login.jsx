@@ -47,48 +47,82 @@ export default function Login({ onLogin }) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #1a3a5c 0%, #2980b9 100%)' }}>
-      <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
-        <div className="flex flex-col items-center mb-8">
-          <div className="w-16 h-16 rounded-2xl bg-blue-600 flex items-center justify-center mb-4">
-            <ShieldCheck size={32} className="text-white" />
-          </div>
-          <h1 className="font-display text-2xl font-bold text-gray-800">Surveillance Financière</h1>
-          <p className="text-gray-400 text-sm mt-1">{error && <p className='text-red'>{error}</p>}</p>
+  <div 
+    className="min-h-screen flex items-center justify-center p-4" 
+    style={{ background: 'linear-gradient(135deg, #0033A0 0%, #001A50 100%)' }}
+  >
+    <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md border border-white/10">
+      
+      {/* En-tête du Formulaire */}
+      <div className="flex flex-col items-center mb-8">
+        {/* Badge d'icône aux couleurs inversées Paositra */}
+        <div 
+          className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4 shadow-md shadow-[#0033A0]/10"
+          style={{ backgroundColor: '#FFD100' }}
+        >
+          <ShieldCheck size={32} style={{ color: '#0033A0' }} />
         </div>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              required
-              placeholder="admin@surveillance.mg"
-              className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+        <h1 className="font-display text-2xl font-black text-[#0033A0] tracking-tight">
+          Surveillance Financière
+        </h1>
+        <p className="text-gray-400 text-xs font-semibold uppercase tracking-wider mt-1">
+          Paositra Malagasy
+        </p>
+
+        {/* Message d'erreur s'il existe */}
+        {error && (
+          <div className="mt-4 p-3 bg-red-50 border border-red-200 text-red-700 text-xs font-semibold rounded-xl w-full text-center">
+            {error}
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Mot de passe</label>
-            <input
-              type="password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              required
-              placeholder="••••••••"
-              className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <button
-            disabled={isLoading}
-            type="submit"
-            className="w-full py-3 rounded-xl font-semibold text-white text-sm transition"
-            style={{ backgroundColor: '#1a3a5c' }}
-          >
-            {isLoading ? 'Connexion...' : 'Se connecter'}
-          </button>
-        </form>
+        )}
       </div>
+
+      {/* Formulaire de Connexion */}
+      <form onSubmit={handleSubmit} className="space-y-5">
+        <div>
+          <label className="block text-xs font-black uppercase tracking-wider text-gray-500 mb-1.5">
+            Adresse Email
+          </label>
+          <input
+            type="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            required
+            placeholder="votre.nom@paositra.mg"
+            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0033A0] focus:border-transparent font-medium shadow-sm transition-all"
+          />
+        </div>
+
+        <div>
+          <label className="block text-xs font-black uppercase tracking-wider text-gray-500 mb-1.5">
+            Mot de passe
+          </label>
+          <input
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            required
+            placeholder="••••••••"
+            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0033A0] focus:border-transparent font-medium shadow-sm transition-all"
+          />
+        </div>
+
+        {/* Bouton d'action principal Jaune avec texte Bleu */}
+        <button
+          disabled={isLoading}
+          type="submit"
+          className="w-full py-3.5 rounded-xl font-black text-sm transition-all shadow-md active:scale-[0.99] disabled:opacity-50 disabled:pointer-events-none"
+          style={{ 
+            backgroundColor: '#FFD100', 
+            color: '#0033A0',
+            boxShadow: '0 4px 14px -4px rgba(255, 209, 0, 0.6)'
+          }}
+        >
+          {isLoading ? 'Authentification...' : 'Se connecter au système'}
+        </button>
+      </form>
     </div>
-  );
+  </div>
+);
+
 }

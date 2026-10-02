@@ -11,7 +11,7 @@ export function useSocket() {
             const token = localStorage.getItem('token');
             if (!token) return;
             try {
-                const res = await fetch('http://localhost:3000/api/notifications/mes-notifications', {
+                const res = await fetch('http://localhost:3000/api/admin/mes_notifications', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 const result = await res.json();

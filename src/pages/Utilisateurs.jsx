@@ -74,7 +74,7 @@ export default function Utilisateurs() {
             key={f}
             onClick={() => setFilter(f)}
             className={`px-4 py-2 rounded-xl text-sm font-semibold transition ${
-              filter === f ? 'bg-blue-600 text-white' : 'bg-white text-gray-600 border hover:bg-gray-50'
+              filter === f ? 'bg-[#0033A0] text-white' : 'bg-white text-gray-600 border hover:bg-gray-50'
             }`}
           >
             {f === 'EN_ATTENTE' ? `⏳ En attente (${notifCount})` : f}
